@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>checkbooks</title>
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css">
+    <style>
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h3>查看书籍</h3>
+    <div class="container" style="margin-top: 100px">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <a href="/addbook" class="btn-success btn">添加书籍</a>  {# 添加页面 #}
+                <table class="table table-bordered table-hover table-striped">
+                    <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>书名</th>
+                            <th>价格</th>
+                            <th>出版日期</th>
+                            <th>作者</th>
+                            <th>出版社</th>
+                            <th>操作1</th>
+                            <th>操作2</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for book in books %}
+                        <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.price }}</td>
+                        <td>{{ book.publishDate|date:'Y-m-d' }}</td>
+                        <td>
+                            {#逐个找出作者#}
+                            {% for author in book.authors.all %}
+                                {% if forloop.last %}
+                                    <span>{{ author.name }}</span>
+                                {% else %}
+                                    <span>{{ author.name }}</span>，
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>{{ book.publish.name }}</td>
+                        <td><a href="/book/{{ book.pk }}/edit/" class="btn btn-default">修改</a></td>
+                        <td><a href="/book/{{ book.pk }}/delete/" class="btn btn-danger">删除</a></td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
